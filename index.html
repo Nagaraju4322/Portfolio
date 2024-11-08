@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avengers Portfolio</title>
+    <title>Iron Developer Portfolio</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
         :root {
-            --avengers-red: #E23636;
-            --avengers-blue: ;
-            --avengers-gold: #FFD700;
-            --text-color: #333333;
-            --text-color-2:white;
-            --bg-color: #F0F0F0;
+            --primary-color: #e62429;
+            --secondary-color: #f0e6d2;
+            --background-color: #1e1e1e;
+            --card-background: rgba(44, 44, 44, 0.8);
         }
 
         * {
@@ -25,28 +21,53 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .thunder-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .thunder {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 0;
+            background-color: #4a90e2;
+            filter: blur(1px);
+            opacity: 0;
+            transform-origin: top;
+            transition: all 0.2s ease;
         }
 
         header {
-            background-color: var(--avengers-blue);
-            color: white;
-            padding: 20px 0;
+            padding: 1rem;
             position: fixed;
             width: 100%;
             z-index: 1000;
+            background-color: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
         }
 
-        .navbar {
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,97 +76,49 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--avengers-gold);
-            text-decoration: none;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(230, 36, 41, 0.7);
         }
 
-        .nav-menu {
+        nav ul {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            list-style-type: none;
         }
 
-        .nav-item {
-            list-style: none;
-            margin-left: 1.5rem;
+        nav ul li {
+            margin-left: 2rem;
         }
 
-        .nav-link {
-            color: white;
+        nav ul li a {
+            color: var(--secondary-color);
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .nav-link:hover {
-            color: var(--avengers-gold);
+        nav ul li a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(230, 36, 41, 0.7);
         }
 
         .hamburger {
             display: none;
             cursor: pointer;
-        }
-
-        .bar {
-            display: block;
-            width: 25px;
-            height: 3px;
-            margin: 5px auto;
-            -webkit-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-            background-color: white;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
         }
 
         .hero {
-            position: relative;
             height: 100vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             text-align: center;
-            color: white;
+            padding: 2rem;
+            background: url('https://example.com/path-to-your-ironman-background-image.jpg') no-repeat center center/cover;
+            position: relative;
             overflow: hidden;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--avengers-gold);
-        }
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
-
-        .typed-text {
-            color: greenyellow;
-            font-weight: bold;
-        }
-
-        .social-icons {
-            margin-top: 30px;
-        }
-
-        .social-icons a {
-            color: var(--text-color-2);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--avengers-gold);
-        }
-
-        .hero video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translateX(-50%) translateY(-50%);
-            z-index: -1;
         }
 
         .hero::before {
@@ -153,443 +126,553 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 0;
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .hero h1 {
+        h1 {
             font-size: 4rem;
-            margin-bottom: 20px;
-            color: var(--avengers-gold);
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(230, 36, 41, 0.9);
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+        #typed {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(240, 230, 210, 0.7);
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--avengers-red);
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+        .social-links {
+            margin-top: 2rem;
         }
 
-        .btn:hover {
-            background-color: #C62828;
+        .social-links a {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .hire-me {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 2rem;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(230, 36, 41, 0.5);
+        }
+
+        .hire-me:hover {
+            background-color: #c41e23;
+            transform: scale(1.05);
         }
 
         section {
-            padding: 80px 0;
+            padding: 4rem 2rem;
         }
 
         h2 {
-            text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: var(--avengers-blue);
-        }
-
-        .skills {
-            background: radial-gradient(circle, #f0f8ff, #e6f2ff);
-            position: relative;
-        }
-
-        .skills::before {
-            content: none;
-        }
-
-        .skills .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .skills h2 {
-            color: var(--avengers-gold);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .skill-item {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 5px;
+            margin-bottom: 2rem;
             text-align: center;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(230, 36, 41, 0.7);
+        }
+
+        .card {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .skill-item i {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--avengers-red);
-        }
-
-        .projects {
-            background: radial-gradient(circle, #fff5e6, #fff0d6);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .project-item {
-            background-color: white;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .project-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .project-info {
-            padding: 20px;
-        }
-
-        .project-info h3 {
-            margin-bottom: 10px;
-            color: var(--avengers-blue);
-        }
-
-        .services {
-            background: radial-gradient(circle, #e6f0ff, #d6e6ff);
-            color: var(--text-color);
-        }
-
-        .services h2 {
-            color: var(--avengers-blue);
-        }
-
-        .services-grid {
+        .skills-container, .services-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            gap: 2rem;
         }
 
-        .service-item {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 30px;
-            border-radius: 5px;
-            text-align: center;
+        .skill-card, .service-card {
+            background-color: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .service-item i {
+        .skill-card:hover, .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-card h3, .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .skill-bar {
+            background-color: #444;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            background-color: var(--primary-color);
+            height: 100%;
+            transition: width 1s ease-in-out;
+        }
+
+        .service-card i {
             font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--avengers-gold);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
 
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        .contact-form input,
+        .contact-form textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: none;
             border-radius: 5px;
-            font-size: 16px;
+            background-color: var(--card-background);
+            color: var(--secondary-color);
+            transition: box-shadow 0.3s ease;
         }
 
-        .form-group textarea {
-            height: 150px;
-            resize: vertical;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .contact-form input:focus,
+        .contact-form textarea:focus {
             outline: none;
-            border-color: var(--avengers-blue);
-            box-shadow: 0 0 5px rgba(13, 71, 161, 0.5);
+            box-shadow: 0 0 10px rgba(230, 36, 41, 0.5);
+        }
+
+        .contact-form textarea {
+            height: 150px;
+        }
+
+        .contact-form button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .contact-form button:hover {
+            background-color: #c41e23;
+            transform: scale(1.05);
         }
 
         footer {
-            background-color: var(--avengers-blue);
-            color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 2rem;
+            background-color: var(--card-background);
         }
 
-        #contact {
-            background: radial-gradient(circle, #f0f0f0, #e6e6e6);
+        .spark {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
         }
 
+        /* 3D Rotating Cube */
+        .cube-container {
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+            margin: 2rem auto;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(230, 36, 41, 0.8);
+            border: 2px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .cube-face:hover {
+            transform: scale(1.05);
+        }
+
+        .cube-face h3 {
+        
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: #c41e23;
+        }
+
+        .cube-face:nth-child(1) { transform: translateZ(150px); }
+        .cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(150px); }
+        .cube-face:nth-child(3) { transform: rotateY(-90deg) translateZ(150px); }
+        .cube-face:nth-child(4) { transform: rotateY(90deg) translateZ(150px); }
+        .cube-face:nth-child(5) { transform: rotateX(-90deg) translateZ(150px); }
+        .cube-face:nth-child(6) { transform: rotateX(90deg) translateZ(150px); }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* Floating Animation for Hero Content */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-content {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
+            h1 {
                 font-size: 3rem;
             }
 
-            .hero p {
-                font-size: 1.2rem;
+            #typed {
+                font-size: 1.5rem;
             }
 
             .hamburger {
                 display: block;
             }
 
-            .hamburger.active .bar:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active .bar:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-
-            .hamburger.active .bar:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                gap: 0;
+            nav ul {
+                display: none;
                 flex-direction: column;
-                background-color: var(--avengers-blue);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-            }
-
-            .nav-item {
-                margin: 16px 0;
-            }
-
-            .nav-menu.active {
+                position: absolute;
+                top: 100%;
                 left: 0;
-            }
-        }
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+                width: 100%;
+                background-color: rgba(30, 30, 30, 0.95);
+                padding: 1rem;
             }
 
-            .hero p {
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .skills-container, .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cube-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .cube-face {
+                width: 200px;
+                height: 200px;
                 font-size: 1.2rem;
             }
+
+            .cube-face:nth-child(1) { transform: translateZ(100px); }
+            .cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(100px); }
+            .cube-face:nth-child(3) { transform: rotateY(-90deg) translateZ(100px); }
+            .cube-face:nth-child(4) { transform: rotateY(90deg) translateZ(100px); }
+            .cube-face:nth-child(5) { transform: rotateX(-90deg) translateZ(100px); }
+            .cube-face:nth-child(6) { transform: rotateX(90deg) translateZ(100px); }
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+    <div class="thunder-container">
+        <div class="thunder"></div>
+        <div class="thunder"></div>
+        <div class="thunder"></div>
+    </div>
+
     <header>
-        <nav class="navbar container">
-            <a href="#" class="logo">Raju</a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-                <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+        <nav>
+            <div class="logo">Iron Dev</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+            <div class="hamburger">☰</div>
         </nav>
     </header>
 
-    <section id="home" class="hero">
-        <video autoplay loop muted playsinline poster="https://source.unsplash.com/random/1920x1080/?avengers">
-            <source src="https://motionbgs.com/media/1762/iron-man-the-heart-of-a-hero.960x540.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-content">
-            <h1 data-aos="fade-down">Hi Iam Nagaraju Vadde</h1>
-            <p>I'm a <span class="typed-text"></span></p>
-            <div class="social-icons">
-                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            </div><br>
-            <a href="#contact" class="btn" data-aos="fade-up" data-aos-delay="200">Get in Touch</a>
-        </div>
-    </section>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 data-aos="fade-down">Hi👋 Iam Nagaraju</h1>
+                <div id="typed-strings">
+                    <p>Web Developer</p>
+                    <p>UI/UX Designer</p>
+                    <p>Problem Solver</p>
+                </div>
+                <span id="typed" data-aos="fade-up"></span>
+                <div class="social-links" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+                <button class="hire-me" data-aos="fade-up" data-aos-delay="400">Hire Me</button>
+            </div>
+        </section>
 
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 data-aos="fade-up">Our Superpowers</h2>
-            <div class="skills-grid">
-                <div class="skill-item" data-aos="fade-up">
+        <section id="about">
+            <h2 data-aos="fade-down">About Me</h2>
+            <div class="card" data-aos="fade-up">
+                <p>I'm a passionate web developer with a knack for creating robust and innovative solutions. With a strong foundation in modern web technologies and a keen eye for design, I strive to build applications that not only function flawlessly but also provide an exceptional user experience. My approach combines the precision of an engineer with the creativity of an artist, ensuring that every project I undertake is both technically sound and visually appealing.</p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 data-aos="fade-down">Skills</h2>
+            <div class="skills-container">
+                <div class="skill-card" data-aos="flip-left">
+                    <h3>HTML5</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-aos="flip-left" data-aos-delay="100">
+                    <h3>CSS3</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-aos="flip-left" data-aos-delay="200">
+                    <h3>JavaScript</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-aos="flip-left" data-aos-delay="300">
+                    <h3>React</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-aos="flip-left" data-aos-delay="400">
+                    <h3>Node.js</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card" data-aos="flip-left" data-aos-delay="500">
+                    <h3>Python</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 65%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 data-aos="fade-down" style="text-align: left;">Projects</h2>
+            <div class="cube-container" data-aos="zoom-in">
+                <div class="cube">
+                    <div class="cube-face" style="background-image: url('undraw_Add_to_cart_re_wrdo.png');">
+                        <h3>E-commerce Platform</h3>
+                    </div>
+                    <div class="cube-face" style="background-image: url('undraw_Social_growth_re_tjy9.png');">
+                        <h3>Social Media App</h3>
+                    </div>
+                    <div class="cube-face" style="background-image: url('undraw_Pair_programming_re_or4x.png');">
+                        <h3>Portfolio Website</h3>
+                    </div>
+                    <div class="cube-face" style="background-image: url('undraw_Push_notifications_re_t84m (1).png');">
+                        <h3>Task Management Tool</h3>
+                    </div>
+                    <div class="cube-face" style="background-image: url('undraw_Weather_app_re_kcb1.png');">
+                        <h3>Weather App</h3>
+                    </div>
+                    <div class="cube-face" style="background-image: url('undraw_Fashion_blogging_re_fhi5.png');">
+                        <h3>Blog Platform</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2 data-aos="fade-down">Services</h2>
+            <div class="services-container">
+                <div class="service-card" data-aos="zoom-in">
                     <i class="fas fa-code"></i>
                     <h3>Web Development</h3>
+                    <p>Custom websites and web applications tailored to your needs.</p>
                 </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-palette"></i>
-                    <h3>UI/UX Design</h3>
-                </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
                     <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile App Development</h3>
+                    <h3>Responsive Design</h3>
+                    <p>Ensuring your website looks great on all devices.</p>
                 </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-database"></i>
-                    <h3>Database Management</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 data-aos="fade-up">Our Missions</h2>
-            <div class="projects-grid">
-                <div class="project-item" data-aos="fade-up">
-                    <img src="https://source.unsplash.com/random/400x300/?technology" alt="Project 1">
-                    <div class="project-info">
-                        <h3>Project Ultron</h3>
-                        <p>Advanced AI system for predictive analysis</p>
-                    </div>
-                </div>
-                <div class="project-item" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://source.unsplash.com/random/400x300/?coding" alt="Project 2">
-                    <div class="project-info">
-                        <h3>Stark Industries Portal</h3>
-                        <p>Secure client management system</p>
-                    </div>
-                </div>
-                <div class="project-item" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://source.unsplash.com/random/400x300/?app" alt="Project 3">
-                    <div class="project-info">
-                        <h3>Avengers Assemble App</h3>
-                        <p>Real-time team collaboration platform</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2 data-aos="fade-up">Our Services</h2>
-            <div class="services-grid">
-                <div  class="service-item" data-aos="fade-up">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Custom Web Development</h3>
-                    <p>Tailored websites to meet your unique needs</p>
-                </div>
-                <div class="service-item" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile App Development</h3>
-                    <p>Cutting-edge apps for iOS and Android</p>
-                </div>
-                <div class="service-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
                     <i class="fas fa-server"></i>
-                    <h3>Cloud Solutions</h3>
-                    <p>Scalable and secure cloud infrastructure</p>
+                    <h3>Backend Development</h3>
+                    <p>Robust server-side solutions for your applications.</p>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>UI/UX Design</h3>
+                    <p>Creating intuitive and visually appealing user interfaces.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact">
-        <div class="container">
-            <h2 data-aos="fade-up">Get in Touch</h2>
+        <section id="contact">
+            <h2 data-aos="fade-down">Contact Us</h2>
             <form class="contact-form" data-aos="fade-up">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="btn">Send Message</button>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
             </form>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Avengers Portfolio. All rights reserved.</p>
-        </div>
+        <p>&copy; 2023 Iron Developer. All rights reserved.</p>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const options = {
-                strings: ['Web Developer', 'Designer', 'UI/UX Designer', 'Freelancer'],
-                typeSpeed: 50,
-                backSpeed: 50,
-                loop: true,
-                cursorChar: '|',
-            };
-
-            const typed = new Typed('.typed-text', options);
-        });
-    </script>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
+        // AOS initialization
         AOS.init({
             duration: 1000,
-            once: true,
-            offset: 200
+            once: true
         });
 
-        // Hamburger menu functionality
-        const hamburger = document.querySelector(".hamburger");
-        const navMenu = document.querySelector(".nav-menu");
+        // Typed.js initialization
+        var typed = new Typed('#typed', {
+            stringsElement: '#typed-strings',
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true,
+            showCursor: false
+        });
 
-        hamburger.addEventListener("click", mobileMenu);
+        // Particles.js initialization
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#e62429' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#e62429', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
 
-        function mobileMenu() {
-            hamburger.classList.toggle("active");
-            navMenu.classList.toggle("active");
+        // Enhanced Thunder effect
+        function createThunder() {
+            const thunders = document.querySelectorAll('.thunder');
+            thunders.forEach((thunder, index) => {
+                setTimeout(() => {
+                    const randomHeight = Math.random() * 100 + 50; // Random height between 50% and 150%
+                    const randomWidth = Math.random() * 2 + 2; // Random width between 2px and 4px
+                    const randomDuration = Math.random() * 0.2 + 0.1; // Random duration between 0.1s and 0.3s
+
+                    thunder.style.height = `${randomHeight}%`;
+                    thunder.style.width = `${randomWidth}px`;
+                    thunder.style.opacity = 0.7;
+                    thunder.style.transition = `all ${randomDuration}s ease`;
+
+                    setTimeout(() => {
+                        thunder.style.height = '0';
+                        thunder.style.opacity = 0;
+                    }, randomDuration * 1000);
+                }, index * 100);
+            });
         }
 
-        // Close mobile menu when clicking on a nav link
-        const navLinks = document.querySelectorAll(".nav-link");
+        setInterval(createThunder, 3000); // More frequent thunder
 
-        navLinks.forEach(n => n.addEventListener("click", closeMenu));
+        // Enhanced Spark effect
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.classList.add('spark');
+            document.querySelector('.hero').appendChild(spark);
 
-        function closeMenu() {
-            hamburger.classList.remove("active");
-            navMenu.classList.remove("active");
+            const size = Math.random() * 4 + 1;
+            const left = Math.random() * 100;
+            const animationDuration = Math.random() * 1 + 0.5;
+
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            spark.style.left = `${left}%`;
+            spark.style.top = '0';
+            spark.style.animation = `spark ${animationDuration}s linear`;
+
+            spark.addEventListener('animationend', () => {
+                spark.remove();
+            });
         }
+
+        setInterval(createSpark, 100); // More frequent sparks
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -601,12 +684,47 @@
             });
         });
 
-        // Form submission (you would typically send this data to a server)
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We\'ll get back to you soon.');
-            this.reset();
+        // Hire me button click event
+        document.querySelector('.hire-me').addEventListener('click', function() {
+            alert('Thank you for your interest! Please contact me via the form below to discuss potential opportunities.');
         });
+
+        // Form submission (you'll need to implement the server-side handling)
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Form submitted! (Note: This is a demo, no actual submission occurred)');
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show');
+            });
+        });
+
+        // Animate skill bars on scroll
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-level');
+            skillBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+                if (isVisible) {
+                    bar.style.width = bar.parentElement.dataset.level;
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateSkillBars);
+        animateSkillBars(); // Initial check
     </script>
 </body>
 </html>
